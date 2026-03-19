@@ -1,1 +1,358 @@
-ss
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serhat Kaçmaz — Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --surface: #111318;
+      --border: #1e2230;
+      --accent: #00e5ff;
+      --accent2: #ff3cac;
+      --text: #e2e8f0;
+      --muted: #5a6380;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- GRID BG --- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* --- GLOW BLOB --- */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px; height: 600px;
+      top: -150px; left: -150px;
+      background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(120px, 80px); }
+    }
+
+    /* --- LAYOUT --- */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* --- HEADER --- */
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 64px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-family: var(--sans);
+      font-size: clamp(42px, 8vw, 82px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: #fff;
+    }
+
+    h1 span {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* --- DIVIDER --- */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+      margin: 0 0 48px;
+      opacity: 0.4;
+    }
+
+    /* --- SECTION TITLE --- */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* --- ABOUT --- */
+    .about {
+      animation: fadeUp 0.6s 0.15s ease both;
+      margin-bottom: 56px;
+    }
+
+    .about p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #a0aec0;
+      max-width: 620px;
+    }
+
+    .about p strong {
+      color: var(--text);
+    }
+
+    /* --- SKILLS --- */
+    .skills {
+      animation: fadeUp 0.6s 0.25s ease both;
+      margin-bottom: 56px;
+    }
+
+    .skill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      background: var(--surface);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,255,0.05);
+    }
+
+    .skill-pill.hot {
+      border-color: rgba(255,60,172,0.4);
+      color: var(--accent2);
+      background: rgba(255,60,172,0.06);
+    }
+
+    /* --- PROJECTS --- */
+    .projects {
+      animation: fadeUp 0.6s 0.35s ease both;
+      margin-bottom: 56px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 24px 28px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,229,255,0.3);
+      transform: translateX(4px);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-name {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .project-stack {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .project-stack span {
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(0,229,255,0.07);
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* --- CONTACT --- */
+    .contact {
+      animation: fadeUp 0.6s 0.45s ease both;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .contact-link {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      background: var(--surface);
+      transition: all 0.2s;
+      letter-spacing: 0.06em;
+    }
+
+    .contact-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(0,229,255,0.05);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.08em;
+    }
+
+    footer span { color: var(--accent2); }
+
+    /* --- CURSOR BLINK --- */
+    .cursor {
+      display: inline-block;
+      width: 10px; height: 1.1em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- TERMINAL LINE --- */
+    .terminal-line {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .terminal-line .prompt { color: var(--accent2); }
+    .terminal-line .cmd    { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <p class="tag">// portfolio</p>
+    <h1>Serhat<span>Kaçmaz</span></h1>
+    <p class="subtitle">Software Engineer &nbsp;·&nbsp; <em>Istanbul, TR</em></p>
+  </header>
+
+  <div class="divider"></div>
+
+  <div class="terminal-line">
+    <span class="prompt">~/serhatkacmaz</span> <span class="cmd">$ whoami</span><span class="cursor"></span>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <p class="section-label">// about</p>
+    <p>
+      Merhaba! Ben <strong>Serhat Kaçmaz</strong> — yazılım geliştirme tutkunu bir mühendis.
+      Temiz kod yazmaktan, ölçeklenebilir sistemler tasarlamaktan ve açık kaynak topluluğuna katkı sağlamaktan keyif alıyorum.
+      <strong>Backend mimarisi</strong> ve <strong>modern web teknolojileri</strong> konularında deneyimliyim.
+      Karmaşık problemleri basit, zarif çözümlere dönüştürmek beni motive ediyor.
+    </p>
+  </section>
+
+</div>
+
+<footer>
+  Built with <span>♥</span> &nbsp;·&nbsp; Serhat Kaçmaz &nbsp;·&nbsp; 2026
+</footer>
+
+</body>
+</html>
