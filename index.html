@@ -117,22 +117,7 @@
       z-index: 1;
     }
 
-    /* ── SCROLL REVEAL ANIMATION ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-    }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.08s; }
-    .reveal-delay-2 { transition-delay: 0.16s; }
-    .reveal-delay-3 { transition-delay: 0.24s; }
-    .reveal-delay-4 { transition-delay: 0.32s; }
 
     /* ── HEADER ── */
     header {
@@ -791,13 +776,131 @@
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
       .hero-title { font-size: 2.5rem; }
       .hero-subtitle { font-size: 1.15rem; }
-      .container { padding: 2.5rem 1.25rem 5rem; }
-      .contact-card { padding: 2rem 1.5rem; }
-      .contact-bar { flex-direction: column; align-items: flex-start; }
-      .contact-actions { width: 100%; justify-content: flex-end; }
+      .container { padding: 2.5rem 1.25rem 4rem; }
+      .hero { margin-bottom: 4rem; }
+      .section { margin-bottom: 4rem; }
+
+      .card-title {
+        font-size: 0.95rem;
+        word-break: break-word;
+      }
+
+      .card-top {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .card-title-group {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .craft-card {
+        padding: 1.35rem 1.25rem;
+      }
+
+      .terminal-box {
+        font-size: 0.72rem;
+      }
+
+      .terminal-code {
+        overflow-x: auto;
+        min-width: 0;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        justify-content: center;
+      }
+
+      .btn-secondary {
+        font-size: 0.76rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      header {
+        margin-bottom: 3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1.05rem; }
+      .hero-bio { font-size: 0.95rem; }
+      .container { padding: 2rem 1rem 3.5rem; }
+
+      .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .card-title {
+        font-size: 0.88rem;
+      }
+
+      .craft-card {
+        padding: 1.2rem 1.1rem;
+        border-radius: 14px;
+      }
+
+      .terminal-box {
+        font-size: 0.68rem;
+        padding: 0.55rem 0.75rem;
+      }
+
+      .contact-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 16px;
+      }
+
+      .contact-title { font-size: 1.35rem; }
+
+      .contact-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+      }
+
+      .contact-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .contact-actions .btn-mail-action {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .email-val {
+        font-size: 0.78rem;
+      }
+
+      .header-time-pill {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.65rem;
+      }
+
+      .brand-name { font-size: 0.88rem; }
+      .brand-role { font-size: 0.66rem; }
+
+      #toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        font-size: 0.78rem;
+      }
+
+      footer { margin-top: 3.5rem; }
     }
 
     /* ── TOAST NOTIFICATION ── */
@@ -838,7 +941,7 @@
   <div class="container">
 
     <!-- ── HEADER ── -->
-    <header class="reveal">
+    <header>
       <div class="brand">
         <div class="brand-logo">SK</div>
         <div class="brand-info">
@@ -858,16 +961,16 @@
 
       <!-- ── HERO SECTION ── -->
       <section class="hero">
-        <div class="hero-badge reveal reveal-delay-1">
+        <div class="hero-badge">
           <span class="hero-badge-dot"></span>
           <span>5+ yıl deneyim</span>
         </div>
-        <h1 class="hero-title reveal reveal-delay-2">Serhat Kaçmaz</h1>
-        <p class="hero-subtitle reveal reveal-delay-2">Software Engineer</p>
-        <p class="hero-bio reveal reveal-delay-3">
+        <h1 class="hero-title">Serhat Kaçmaz</h1>
+        <p class="hero-subtitle">Software Engineer</p>
+        <p class="hero-bio">
           5+ yıllık mühendislik tecrübesiyle backend mimarileri, mobil ekosistem ve açık kaynak araçlar üzerine odaklanıyorum.
         </p>
-        <div class="hero-actions reveal reveal-delay-4">
+        <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             İletişime Geç
@@ -880,7 +983,7 @@
       </section>
 
       <!-- ── SECTION 01: OPEN SOURCE & PACKAGES ── -->
-      <section class="section reveal" id="opensource">
+      <section class="section" id="opensource">
         <div class="section-header">
           <span class="section-num">01</span>
           <span class="section-title">Açık Kaynak &amp; Paketler</span>
@@ -889,13 +992,13 @@
 
         <div class="card-stack">
           <!-- Featured NuGet Card -->
-          <a href="https://www.nuget.org/packages/CodeFlightHub.CorePackets.QuickExtend" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-nuget">
+          <a href="https://www.nuget.org/packages/CodeFlightHub.CorePackets.QuickExtend" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-nuget">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon" style="color: var(--accent-cyan);">
                   <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
-                <h3 class="card-title">CodeFlightHub.CorePackets.QuickExtend</h3>
+                <h3 class="card-title">QuickExtend</h3>
               </div>
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span class="badge-pill badge-nuget">NuGet</span>
@@ -921,7 +1024,7 @@
           </a>
 
           <!-- GitHub Repositories Card -->
-          <a href="https://github.com/serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-github">
+          <a href="https://github.com/serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-github">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon">
@@ -944,7 +1047,7 @@
       </section>
 
       <!-- ── SECTION 02: WRITING & RESEARCH ── -->
-      <section class="section reveal" id="writing">
+      <section class="section" id="writing">
         <div class="section-header">
           <span class="section-num">02</span>
           <span class="section-title">Yazı &amp; Araştırma</span>
@@ -953,7 +1056,7 @@
 
         <div class="card-stack">
           <!-- Medium Blog Card -->
-          <a href="https://medium.com/@serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-medium">
+          <a href="https://medium.com/@serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-medium">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon">
@@ -974,7 +1077,7 @@
           </a>
 
           <!-- Academic Paper Card -->
-          <a href="https://dergipark.org.tr/en/pub/ejosat/article/1214802" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-article">
+          <a href="https://dergipark.org.tr/en/pub/ejosat/article/1214802" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-article">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon" style="color: var(--accent-amber);">
@@ -999,7 +1102,7 @@
       </section>
 
       <!-- ── SECTION 03: MOBILE ECOSYSTEM ── -->
-      <section class="section reveal" id="apps">
+      <section class="section" id="apps">
         <div class="section-header">
           <span class="section-num">03</span>
           <span class="section-title">Mobil Uygulamalar</span>
@@ -1008,7 +1111,7 @@
 
         <div class="store-grid">
           <!-- App Store -->
-          <a href="https://apps.apple.com/tr/developer/serhat-kacmaz/id1885178792" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-appstore">
+          <a href="https://apps.apple.com/tr/developer/serhat-kacmaz/id1885178792" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-appstore">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon" style="color: var(--accent-purple);">
@@ -1029,7 +1132,7 @@
           </a>
 
           <!-- Google Play -->
-          <a href="https://play.google.com/store/apps/developer?id=Serhat+KACMAZ&hl=tr" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-playstore">
+          <a href="https://play.google.com/store/apps/developer?id=Serhat+KACMAZ&hl=tr" target="_blank" rel="noopener noreferrer" class="craft-card" id="card-playstore">
             <div class="card-top">
               <div class="card-title-group">
                 <div class="card-icon" style="color: var(--accent-emerald);">
@@ -1052,7 +1155,7 @@
       </section>
 
       <!-- ── SECTION 04: CONTACT & CONNECT ── -->
-      <section class="section reveal" id="contact">
+      <section class="section" id="contact">
         <div class="section-header">
           <span class="section-num">04</span>
           <span class="section-title">İletişim &amp; Bağlantı</span>
@@ -1090,7 +1193,7 @@
     </main>
 
     <!-- ── FOOTER ── -->
-    <footer class="reveal">
+    <footer>
       <div>
         <span>© <span id="year"></span> Serhat Kaçmaz</span>
       </div>
@@ -1172,21 +1275,6 @@
       document.body.removeChild(tempInput);
     }
 
-    // ── SCROLL REVEAL (IntersectionObserver) ──
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -40px 0px'
-    });
-
-    revealElements.forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>
