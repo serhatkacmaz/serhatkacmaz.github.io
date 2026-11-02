@@ -3,568 +3,1190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Serhat Kaçmaz | Software Engineer & Researcher</title>
-  <meta name="description" content="Serhat Kaçmaz - Kişisel web sayfası. Mobil ve Gömülü Sistemler, IoT projeleri, makaleler ve sosyal bağlantılar.">
-  
-  <!-- Fonts -->
+  <title>Serhat Kaçmaz — Software Engineer</title>
+  <meta name="description" content="Serhat Kaçmaz — Software Engineer. 5+ yıllık mühendislik tecrübesi, backend mimarileri, mobil ekosistem ve açık kaynak araçlar.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #090a0f;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --card-hover-border: rgba(99, 102, 241, 0.4);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.25);
-      --badge-bg: rgba(99, 102, 241, 0.12);
-      --badge-text: #a5b4fc;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    * {
+    /* ── BASE & DESIGN TOKENS ── */
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    :root {
+      --bg: #060810;
+      --surface: rgba(14, 17, 26, 0.75);
+      --surface-hover: rgba(22, 26, 40, 0.9);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(56, 189, 248, 0.35);
+      --text-1: #f0f4f8;
+      --text-2: #94a3b8;
+      --text-3: #5b6b82;
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+    }
+
     body {
       background-color: var(--bg);
-      color: var(--text-main);
+      color: var(--text-1);
       font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.65;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       position: relative;
       overflow-x: hidden;
-      padding: 40px 20px;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Subtle background glow effect */
-    .bg-glow-1 {
+    /* ── AMBIENT ATMOSPHERIC GLOW ── */
+    body::before {
+      content: "";
       position: fixed;
-      top: -15%;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 550px;
+      background: radial-gradient(ellipse at center,
+        rgba(56, 189, 248, 0.15) 0%,
+        rgba(129, 140, 248, 0.08) 35%,
+        rgba(192, 132, 252, 0.04) 55%,
+        transparent 75%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientPulse 8s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: -200px;
       left: 50%;
       transform: translateX(-50%);
       width: 700px;
-      height: 450px;
-      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
-      z-index: 0;
+      height: 400px;
+      background: radial-gradient(ellipse at center,
+        rgba(52, 211, 153, 0.06) 0%,
+        rgba(56, 189, 248, 0.03) 50%,
+        transparent 75%);
+      filter: blur(100px);
       pointer-events: none;
+      z-index: 0;
     }
 
-    .bg-glow-2 {
+    @keyframes ambientPulse {
+      0% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    .noise-overlay {
       position: fixed;
-      bottom: -10%;
-      right: 15%;
-      width: 500px;
-      height: 350px;
-      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0) 70%);
+      inset: 0;
       z-index: 0;
       pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
     }
 
     .container {
       width: 100%;
-      max-width: 640px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 7rem;
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
     }
 
-    /* Profile Header */
-    .profile-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 16px;
+    /* ── SCROLL REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
     }
 
-    .avatar-wrapper {
-      position: relative;
-      width: 96px;
-      height: 96px;
-      margin-bottom: 4px;
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1e1e2f 0%, #2a2b40 100%);
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
 
-    .status-dot {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 14px;
-      height: 14px;
-      background: #10b981;
-      border: 2.5px solid var(--bg);
-      border-radius: 50%;
-    }
-
-    .name-title h1 {
-      font-size: 1.85rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tagline {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    .chip-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 5px 12px;
-      border-radius: 9999px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .chip svg {
-      width: 13px;
-      height: 13px;
-      opacity: 0.8;
-    }
-
-    /* Section Headers */
-    .section-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-dim);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .section-title::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    /* Links Group */
-    .links-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .link-card {
+    /* ── HEADER ── */
+    header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      text-decoration: none;
-      color: var(--text-main);
-      backdrop-filter: blur(12px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .link-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--card-hover-border);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px -10px var(--accent-glow);
-    }
-
-    .link-left {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 0.85rem;
     }
 
-    .link-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(129, 140, 248, 0.15) 50%, rgba(192, 132, 252, 0.1) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-main);
-      transition: transform 0.25s ease;
-      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15), 0 2px 4px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s var(--ease-out-expo);
     }
 
-    .link-card:hover .link-icon {
-      transform: scale(1.08);
+    .brand-logo:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 24px rgba(56, 189, 248, 0.25), 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .link-text {
+    .brand-info {
       display: flex;
       flex-direction: column;
     }
 
-    .link-title {
+    .brand-name {
       font-size: 0.95rem;
-      font-weight: 600;
-      color: #f1f5f9;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.015em;
     }
 
-    .link-subtitle {
+    .brand-role {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+    }
+
+    .header-time-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
       font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-top: 2px;
+      color: var(--text-3);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    .arrow-icon {
-      color: var(--text-dim);
-      transition: transform 0.25s ease, color 0.25s ease;
+    .header-time-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+      animation: livePulse 2s ease-in-out infinite;
     }
 
-    .link-card:hover .arrow-icon {
-      color: #fff;
-      transform: translateX(4px);
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(52, 211, 153, 0.5); }
+      50% { opacity: 0.5; box-shadow: 0 0 4px rgba(52, 211, 153, 0.3); }
     }
 
-    /* Publication Card */
-    .publication-card {
-      background: linear-gradient(145deg, rgba(99, 102, 241, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      border-radius: 16px;
-      padding: 22px;
+    .header-time-val {
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── HERO SECTION ── */
+    .hero {
+      margin-bottom: 5.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
+    }
+
+    .hero-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 1.08;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.35rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-bio {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 2.25rem;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.3rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out-expo);
+      border: 1px solid transparent;
+      font-family: var(--font-sans);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ffffff 0%, #e8ecf1 100%);
+      color: #0a0c14;
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.12), 0 1px 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(255, 255, 255, 0.2), 0 2px 6px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border);
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.1);
+    }
+
+    /* ── SECTIONS (VERTICAL SCROLL RHYTHM) ── */
+    .section {
+      margin-bottom: 5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    .card-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    /* ── PREMIUM CRAFT CARD ── */
+    .craft-card {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.65rem 1.85rem;
       text-decoration: none;
       color: inherit;
       display: block;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s var(--ease-out-expo);
       position: relative;
       overflow: hidden;
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+        0 20px 40px -16px rgba(0, 0, 0, 0.5);
     }
 
-    .publication-card::before {
+    /* Card shimmer glow on hover */
+    .craft-card::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(180deg, #6366f1, #a855f7);
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.4), rgba(129, 140, 248, 0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
     }
 
-    .publication-card:hover {
-      border-color: rgba(99, 102, 241, 0.5);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.3);
+    .craft-card::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 0%), rgba(56, 189, 248, 0.06) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
     }
 
-    .pub-badge-row {
+    .craft-card:hover {
+      border-color: rgba(56, 189, 248, 0.25);
+      background: var(--surface-hover);
+      transform: translateY(-4px);
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+        0 28px 56px -16px rgba(0, 0, 0, 0.65),
+        0 0 40px -10px rgba(56, 189, 248, 0.08);
+    }
+
+    .craft-card:hover::before {
+      opacity: 1;
+    }
+
+    .craft-card:hover::after {
+      opacity: 1;
+    }
+
+    .card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      gap: 1rem;
+      margin-bottom: 0.7rem;
     }
 
-    .pub-badge {
-      display: inline-flex;
+    .card-title-group {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 4px 10px;
-      border-radius: 6px;
+      gap: 0.85rem;
     }
 
-    .pub-year {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--text-dim);
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      transition: all 0.3s var(--ease-out-expo);
     }
 
-    .pub-title {
+    .craft-card:hover .card-icon {
+      transform: scale(1.1) rotate(-2deg);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .card-title {
       font-size: 1.05rem;
       font-weight: 700;
-      line-height: 1.45;
       color: #ffffff;
-      margin-bottom: 8px;
+      letter-spacing: -0.015em;
     }
 
-    .pub-desc {
-      font-size: 0.85rem;
-      line-height: 1.55;
-      color: var(--text-muted);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 14px;
+    .badge-pill {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.25s ease;
     }
 
-    .pub-footer {
+    .badge-nuget {
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+    }
+    .craft-card:hover .badge-nuget {
+      background: rgba(56, 189, 248, 0.14);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+    }
+
+    .badge-github {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .craft-card:hover .badge-github {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .badge-medium {
+      color: var(--text-2);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .badge-paper {
+      color: var(--accent-amber);
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.22);
+    }
+    .craft-card:hover .badge-paper {
+      background: rgba(251, 191, 36, 0.14);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.12);
+    }
+
+    .badge-ios {
+      color: var(--accent-purple);
+      background: rgba(192, 132, 252, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.22);
+    }
+    .craft-card:hover .badge-ios {
+      background: rgba(192, 132, 252, 0.14);
+      box-shadow: 0 0 12px rgba(192, 132, 252, 0.12);
+    }
+
+    .badge-android {
+      color: var(--accent-emerald);
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.22);
+    }
+    .craft-card:hover .badge-android {
+      background: rgba(52, 211, 153, 0.14);
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.12);
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 0.85rem;
+    }
+
+    /* Terminal snippet */
+    .terminal-box {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.75rem;
+      background: rgba(6, 8, 14, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-family: var(--font-mono);
       font-size: 0.78rem;
-      color: var(--text-dim);
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: #e2e8f0;
+      margin-top: 0.65rem;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
     }
 
-    .pub-journal {
+    .terminal-code {
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .terminal-code::-webkit-scrollbar { display: none; }
+
+    .terminal-prompt {
+      color: var(--accent-cyan);
+      margin-right: 0.45rem;
+      user-select: none;
+    }
+
+    .btn-terminal-copy {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      border-radius: 6px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.74rem;
+      font-family: var(--font-sans);
       font-weight: 500;
-      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
     }
 
-    .pub-link-cta {
+    .btn-terminal-copy:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+    }
+
+    .arrow-icon {
+      color: var(--text-3);
+      transition: all 0.3s var(--ease-out-expo);
+      display: inline-flex;
+    }
+
+    .craft-card:hover .arrow-icon {
+      color: var(--accent-cyan);
+      transform: translate(3px, -3px);
+    }
+
+    /* ── MOBILE APPS ── */
+    .store-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    /* ── CONTACT SECTION ── */
+    .contact-card {
+      background: linear-gradient(145deg, rgba(18, 22, 34, 0.85) 0%, rgba(10, 13, 20, 0.95) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      padding: 2.75rem 2.5rem;
+      box-shadow:
+        0 28px 56px -18px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(129, 140, 248, 0.04) 40%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-card::after {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .contact-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.7rem;
+      position: relative;
+    }
+
+    .contact-desc {
+      font-size: 0.98rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      max-width: 520px;
+      position: relative;
+    }
+
+    .contact-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: rgba(6, 8, 14, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.8rem 1.1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+
+    .contact-bar:hover {
+      border-color: rgba(56, 189, 248, 0.2);
+    }
+
+    .email-val {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      user-select: all;
+    }
+
+    .email-val svg {
+      stroke: var(--accent-cyan);
+    }
+
+    .contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-mail-action {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      color: #818cf8;
+      gap: 0.4rem;
+      font-family: var(--font-sans);
+      transition: all 0.25s var(--ease-out-expo);
+    }
+
+    .btn-mail-action:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-mail-primary {
+      background: linear-gradient(135deg, #ffffff, #e8ecf1);
+      color: #0a0c14;
       font-weight: 600;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.12);
     }
 
-    /* Footer */
+    .btn-mail-primary:hover {
+      background: linear-gradient(135deg, #f1f5f9, #dde3eb);
+      color: #0a0c14;
+      box-shadow: 0 6px 22px rgba(255, 255, 255, 0.18);
+    }
+
+    .linkedin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .linkedin-link:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      margin-top: 12px;
-      font-size: 0.8rem;
-      color: var(--text-dim);
+      margin-top: 5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-3);
     }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      body {
-        padding: 30px 16px;
-      }
-      .link-card {
-        padding: 14px 16px;
-      }
-      .link-title {
-        font-size: 0.9rem;
-      }
-      .name-title h1 {
-        font-size: 1.6rem;
-      }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { font-size: 1.15rem; }
+      .container { padding: 2.5rem 1.25rem 5rem; }
+      .contact-card { padding: 2rem 1.5rem; }
+      .contact-bar { flex-direction: column; align-items: flex-start; }
+      .contact-actions { width: 100%; justify-content: flex-end; }
+    }
+
+    /* ── TOAST NOTIFICATION ── */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: rgba(14, 17, 26, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #ffffff;
+      padding: 0.8rem 1.3rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.08);
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+      pointer-events: none;
+      transition: all 0.3s var(--ease-out-expo);
+      z-index: 9999;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   </style>
 </head>
 <body>
 
-  <!-- Glow effects -->
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
+  <div class="noise-overlay"></div>
 
-  <main class="container">
-    
-    <!-- Profile Info -->
-    <header class="profile-header">
-      <div class="avatar-wrapper">
-        <div class="avatar" aria-label="Serhat Kaçmaz Profile Picture">SK</div>
-        <span class="status-dot" title="Available"></span>
+  <div class="container">
+
+    <!-- ── HEADER ── -->
+    <header class="reveal">
+      <div class="brand">
+        <div class="brand-logo">SK</div>
+        <div class="brand-info">
+          <span class="brand-name">Serhat Kaçmaz</span>
+          <span class="brand-role">Software Engineer</span>
+        </div>
       </div>
-      <div class="name-title">
-        <h1>Serhat Kaçmaz</h1>
-        <p class="tagline">Software Engineer</p>
+      <div class="header-time-pill">
+        <span class="header-time-dot"></span>
+        <span>İstanbul</span>
+        <span class="header-time-val" id="clock">--:--:--</span>
       </div>
     </header>
 
-    <!-- Social & Profiles -->
-    <section>
-      <div class="section-title">Bağlantılar</div>
-      <div class="links-grid">
-        
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/serhat-kacmaz/" target="_blank" rel="noopener noreferrer" class="link-card" id="link-linkedin">
-          <div class="link-left">
-            <div class="link-icon" style="color: #38bdf8;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-              </svg>
+    <!-- ── MAIN VERTICAL SCROLL CONTENT ── -->
+    <main>
+
+      <!-- ── HERO SECTION ── -->
+      <section class="hero">
+        <div class="hero-badge reveal reveal-delay-1">
+          <span class="hero-badge-dot"></span>
+          <span>5+ yıl deneyim</span>
+        </div>
+        <h1 class="hero-title reveal reveal-delay-2">Serhat Kaçmaz</h1>
+        <p class="hero-subtitle reveal reveal-delay-2">Software Engineer</p>
+        <p class="hero-bio reveal reveal-delay-3">
+          5+ yıllık mühendislik tecrübesiyle backend mimarileri, mobil ekosistem ve açık kaynak araçlar üzerine odaklanıyorum.
+        </p>
+        <div class="hero-actions reveal reveal-delay-4">
+          <a href="#contact" class="btn btn-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            İletişime Geç
+          </a>
+          <button class="btn btn-secondary" onclick="copyText('serhatkacmaz3@gmail.com', 'E-posta panoya kopyalandı!')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            serhatkacmaz3@gmail.com
+          </button>
+        </div>
+      </section>
+
+      <!-- ── SECTION 01: OPEN SOURCE & PACKAGES ── -->
+      <section class="section reveal" id="opensource">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <span class="section-title">Açık Kaynak &amp; Paketler</span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="card-stack">
+          <!-- Featured NuGet Card -->
+          <a href="https://www.nuget.org/packages/CodeFlightHub.CorePackets.QuickExtend" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-nuget">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon" style="color: var(--accent-cyan);">
+                  <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3 class="card-title">CodeFlightHub.CorePackets.QuickExtend</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-nuget">NuGet</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
             </div>
-            <div class="link-text">
-              <span class="link-title">LinkedIn</span>
-              <span class="link-subtitle">linkedin.com/in/serhat-kacmaz</span>
+
+            <p class="card-desc">
+              .NET ekosistemi için veri yapılarını, koleksiyon manipülasyonlarını ve tip dönüştürme operasyonlarını optimize eden açık kaynak C# uzantı (extension) kütüphanesi.
+            </p>
+
+            <div class="terminal-box" onclick="event.preventDefault(); event.stopPropagation();">
+              <div class="terminal-code">
+                <span class="terminal-prompt">&gt;</span>dotnet add package CodeFlightHub.CorePackets.QuickExtend
+              </div>
+              <button type="button" class="btn-terminal-copy" onclick="event.preventDefault(); event.stopPropagation(); copyText('dotnet add package CodeFlightHub.CorePackets.QuickExtend', 'Terminal komutu kopyalandı!')">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Kopyala
+              </button>
+            </div>
+          </a>
+
+          <!-- GitHub Repositories Card -->
+          <a href="https://github.com/serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-github">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </div>
+                <h3 class="card-title">github.com/serhatkacmaz</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-github">Açık Kaynak</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
+            </div>
+            <p class="card-desc">
+              Geliştirdiğim kütüphaneler, mimari prototipler ve topluluk katkılarının yer aldığı açık kaynak repolarım.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── SECTION 02: WRITING & RESEARCH ── -->
+      <section class="section reveal" id="writing">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <span class="section-title">Yazı &amp; Araştırma</span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="card-stack">
+          <!-- Medium Blog Card -->
+          <a href="https://medium.com/@serhatkacmaz" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-medium">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon">
+                  <svg viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+                </div>
+                <h3 class="card-title">Medium Blog</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-medium">Makaleler</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
+            </div>
+            <p class="card-desc">
+              Yazılım mimarisi, mühendislik pratikleri, modern backend yaklaşımları ve teknik deneyimler.
+            </p>
+          </a>
+
+          <!-- Academic Paper Card -->
+          <a href="https://dergipark.org.tr/en/pub/ejosat/article/1214802" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-article">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon" style="color: var(--accent-amber);">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <div>
+                  <h3 class="card-title" style="font-size: 0.98rem;">Evcil Hayvanlar İçin Nesnelerin İnterneti Tabanlı Akıllı Mama Sistemi</h3>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-paper">Akademik</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
+            </div>
+            <p class="card-desc" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-3); margin-bottom: 0;">
+              Avrupa Bilim ve Teknoloji Dergisi (EJOSAT, 2022) • DOI: 10.31590/ejosat.1214802
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── SECTION 03: MOBILE ECOSYSTEM ── -->
+      <section class="section reveal" id="apps">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <span class="section-title">Mobil Uygulamalar</span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="store-grid">
+          <!-- App Store -->
+          <a href="https://apps.apple.com/tr/developer/serhat-kacmaz/id1885178792" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-1" id="card-appstore">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon" style="color: var(--accent-purple);">
+                  <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.61 1.34-.55.63-1.03 1.7-0.9 2.73 1 .08 2.01-.52 2.58-1.22z"/></svg>
+                </div>
+                <h3 class="card-title">Apple App Store</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-ios">iOS</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
+            </div>
+            <p class="card-desc">
+              iOS ekosistemi için tasarlanmış ve yayınlanmış mobil uygulamalar.
+            </p>
+          </a>
+
+          <!-- Google Play -->
+          <a href="https://play.google.com/store/apps/developer?id=Serhat+KACMAZ&hl=tr" target="_blank" rel="noopener noreferrer" class="craft-card reveal reveal-delay-2" id="card-playstore">
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-icon" style="color: var(--accent-emerald);">
+                  <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.793 12 3.61 22.186a2.2 2.2 0 0 1-.61-1.55V3.364c0-.6.23-1.15.609-1.55zm11.602 11.603l2.25 2.25-12.37 7.07 10.12-9.32zm0-2.834L5.091 1.263l12.37 7.07-2.25 2.25zm1.414 1.417l2.87 1.64a1.8 1.8 0 0 1 0 3.12l-2.87 1.64-1.77-1.7 1.77-2.7z"/></svg>
+                </div>
+                <h3 class="card-title">Google Play Store</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge-pill badge-android">Android</span>
+                <span class="arrow-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+              </div>
+            </div>
+            <p class="card-desc">
+              Android kullanıcıları için optimize edilmiş, stabil ve kullanıcı odaklı mobil çözümler.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── SECTION 04: CONTACT & CONNECT ── -->
+      <section class="section reveal" id="contact">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <span class="section-title">İletişim &amp; Bağlantı</span>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="contact-card">
+          <h2 class="contact-title">Birlikte bir şeyler inşa edelim.</h2>
+          <p class="contact-desc">
+            Teknik konular üzerine konuşmak, fikir alışverişinde bulunmak veya tanışmak isterseniz dilediğiniz zaman ulaşabilirsiniz.
+          </p>
+
+          <div class="contact-bar">
+            <div class="email-val">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>serhatkacmaz3@gmail.com</span>
+            </div>
+            <div class="contact-actions">
+              <button class="btn-mail-action" onclick="copyText('serhatkacmaz3@gmail.com', 'E-posta panoya kopyalandı!')" id="btn-copy-email">
+                Kopyala
+              </button>
+              <a href="mailto:serhatkacmaz3@gmail.com?subject=Merhaba%20Serhat" class="btn-mail-action btn-mail-primary" id="btn-send-mail">
+                Mail Gönder
+              </a>
             </div>
           </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
 
-        <!-- GitHub -->
-        <a href="https://github.com/serhatkacmaz" target="_blank" rel="noopener noreferrer" class="link-card" id="link-github">
-          <div class="link-left">
-            <div class="link-icon" style="color: #f1f5f9;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">GitHub</span>
-              <span class="link-subtitle">Açık kaynak projeler ve depolar</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+          <a href="https://www.linkedin.com/in/serhat-kacmaz/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+            <span>LinkedIn üzerinden profilime ulaşın</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </section>
 
-        <!-- Medium -->
-        <a href="https://medium.com/@serhatkacmaz" target="_blank" rel="noopener noreferrer" class="link-card" id="link-medium">
-          <div class="link-left">
-            <div class="link-icon" style="color: #34d399;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">Medium</span>
-              <span class="link-subtitle">Teknik yazılar ve makaleler</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+    </main>
 
+    <!-- ── FOOTER ── -->
+    <footer class="reveal">
+      <div>
+        <span>© <span id="year"></span> Serhat Kaçmaz</span>
       </div>
-    </section>
-
-    <!-- Open Source / Libraries -->
-    <section>
-      <div class="section-title">Open Source</div>
-      <div class="links-grid">
-        
-        <!-- NuGet Package -->
-        <a href="https://www.nuget.org/packages/CodeFlightHub.CorePackets.QuickExtend" target="_blank" rel="noopener noreferrer" class="link-card" id="link-nuget">
-          <div class="link-left">
-            <div class="link-icon" style="color: #38bdf8;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">CodeFlightHub.QuickExtend</span>
-              <span class="link-subtitle">NuGet Package • .NET Extension Library</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- Publication / Article (Subtle Link) -->
-    <section>
-      <div class="section-title">Akademik Yayın</div>
-      <div class="links-grid">
-        <a href="https://dergipark.org.tr/en/pub/ejosat/article/1214802" target="_blank" rel="noopener noreferrer" class="link-card" id="article-link">
-          <div class="link-left">
-            <div class="link-icon" style="color: #a78bfa;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">Akıllı Mama Sistemi (IoT)</span>
-              <span class="link-subtitle">Avrupa Bilim ve Teknoloji Dergisi (EJOSAT)</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- Apps & Stores -->
-    <section>
-      <div class="section-title">Mobil Uygulamalar</div>
-      <div class="links-grid">
-        
-        <!-- Google Play Store -->
-        <a href="https://play.google.com/store/apps/developer?id=Serhat+KACMAZ&hl=tr" target="_blank" rel="noopener noreferrer" class="link-card" id="link-playstore">
-          <div class="link-left">
-            <div class="link-icon" style="color: #60a5fa;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .609-.986zm11.24 11.243l2.25 2.25-11.44 6.49 9.19-8.74zm0-2.114L5.66 2.2 17.1 8.693l-2.25 2.25zm1.472 1.057l3.69 2.095c.989.562.989 1.48 0 2.042l-3.69 2.094-1.782-1.782 1.782-1.782a.455.455 0 0 0 0-.667z"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">Google Play Store</span>
-              <span class="link-subtitle">Android Uygulamaları &amp; Oyunlar</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-
-        <!-- Apple App Store -->
-        <a href="https://apps.apple.com/tr/developer/serhat-kacmaz/id1885178792" target="_blank" rel="noopener noreferrer" class="link-card" id="link-appstore">
-          <div class="link-left">
-            <div class="link-icon" style="color: #e2e8f0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.87-.9.04-1.97.6-2.61 1.35-.57.65-1.06 1.71-.93 2.74 1 .08 2.01-.48 2.62-1.22z"/>
-              </svg>
-            </div>
-            <div class="link-text">
-              <span class="link-title">App Store</span>
-              <span class="link-subtitle">iOS Uygulamaları</span>
-            </div>
-          </div>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <p>© <span id="year"></span> Serhat Kaçmaz. Tüm hakları saklıdır.</p>
     </footer>
 
-  </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toast-text">Kopyalandı!</span>
+  </div>
 
   <script>
+    // Current Year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Istanbul Live Clock
+    function updateClock() {
+      const clockEl = document.getElementById('clock');
+      if (clockEl) {
+        const now = new Date();
+        const trTime = new Intl.DateTimeFormat('tr-TR', {
+          timeZone: 'Europe/Istanbul',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        }).format(now);
+        clockEl.textContent = trTime;
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Toast Notification
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      if (!toast || !text) return;
+
+      text.textContent = message;
+      toast.classList.add('show');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    // Copy to Clipboard
+    function copyText(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg || 'Kopyalandı!');
+        }).catch(() => {
+          fallbackCopy(text, successMsg);
+        });
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      tempInput.style.position = 'fixed';
+      tempInput.style.left = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.focus();
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Kopyalandı!');
+      } catch (err) {
+        showToast('Kopyalama başarısız');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // ── SCROLL REVEAL (IntersectionObserver) ──
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>
