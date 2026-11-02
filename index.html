@@ -1,358 +1,570 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Serhat Kaçmaz — Software Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serhat Kaçmaz | Software Engineer & Researcher</title>
+  <meta name="description" content="Serhat Kaçmaz - Kişisel web sayfası. Mobil ve Gömülü Sistemler, IoT projeleri, makaleler ve sosyal bağlantılar.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #0b0c10;
-      --surface: #111318;
-      --border: #1e2230;
-      --accent: #00e5ff;
-      --accent2: #ff3cac;
-      --text: #e2e8f0;
-      --muted: #5a6380;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Syne', sans-serif;
+      --bg: #090a0f;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(99, 102, 241, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --badge-bg: rgba(99, 102, 241, 0.12);
+      --badge-text: #a5b4fc;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* --- GRID BG --- */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 40px 40px;
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* --- GLOW BLOB --- */
-    body::after {
-      content: '';
-      position: fixed;
-      width: 600px; height: 600px;
-      top: -150px; left: -150px;
-      background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      animation: drift 12s ease-in-out infinite alternate;
-    }
-
-    @keyframes drift {
-      from { transform: translate(0,0); }
-      to   { transform: translate(120px, 80px); }
-    }
-
-    /* --- LAYOUT --- */
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 60px 24px 100px;
-    }
-
-    /* --- HEADER --- */
-    header {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 64px;
-      animation: fadeUp 0.6s ease both;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
+    /* Subtle background glow effect */
+    .bg-glow-1 {
+      position: fixed;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 450px;
+      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-glow-2 {
+      position: fixed;
+      bottom: -10%;
+      right: 15%;
+      width: 500px;
+      height: 350px;
+      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Profile Header */
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin-bottom: 4px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e1e2f 0%, #2a2b40 100%);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      background: #10b981;
+      border: 2.5px solid var(--bg);
+      border-radius: 50%;
+    }
+
+    .name-title h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .chip-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .chip svg {
+      width: 13px;
+      height: 13px;
       opacity: 0.8;
     }
 
-    h1 {
-      font-family: var(--sans);
-      font-size: clamp(42px, 8vw, 82px);
-      font-weight: 800;
-      line-height: 0.95;
-      letter-spacing: -2px;
-      color: #fff;
-    }
-
-    h1 span {
-      display: block;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 8px;
-      letter-spacing: 0.04em;
-    }
-
-    .subtitle em {
-      color: var(--accent);
-      font-style: normal;
-    }
-
-    /* --- DIVIDER --- */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
-      margin: 0 0 48px;
-      opacity: 0.4;
-    }
-
-    /* --- SECTION TITLE --- */
-    .section-label {
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      color: var(--accent2);
+    /* Section Headers */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    /* --- ABOUT --- */
-    .about {
-      animation: fadeUp 0.6s 0.15s ease both;
-      margin-bottom: 56px;
-    }
-
-    .about p {
-      font-size: 14px;
-      line-height: 1.9;
-      color: #a0aec0;
-      max-width: 620px;
-    }
-
-    .about p strong {
-      color: var(--text);
-    }
-
-    /* --- SKILLS --- */
-    .skills {
-      animation: fadeUp 0.6s 0.25s ease both;
-      margin-bottom: 56px;
-    }
-
-    .skill-grid {
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 12px;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 8px;
     }
 
-    .skill-pill {
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      padding: 5px 14px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--muted);
-      background: var(--surface);
-      transition: all 0.2s;
-      cursor: default;
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .skill-pill:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(0,229,255,0.05);
-    }
-
-    .skill-pill.hot {
-      border-color: rgba(255,60,172,0.4);
-      color: var(--accent2);
-      background: rgba(255,60,172,0.06);
-    }
-
-    /* --- PROJECTS --- */
-    .projects {
-      animation: fadeUp 0.6s 0.35s ease both;
-      margin-bottom: 56px;
-    }
-
-    .project-card {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: 24px 28px;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: default;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(180deg, var(--accent), var(--accent2));
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(0,229,255,0.3);
-      transform: translateX(4px);
-    }
-
-    .project-card:hover::before { opacity: 1; }
-
-    .project-name {
-      font-family: var(--sans);
-      font-weight: 700;
-      font-size: 16px;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .project-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .project-stack {
+    /* Links Group */
+    .links-grid {
       display: flex;
-      gap: 6px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-
-    .project-stack span {
-      font-size: 10px;
-      color: var(--accent);
-      background: rgba(0,229,255,0.07);
-      padding: 2px 8px;
-      border-radius: 2px;
-      letter-spacing: 0.05em;
-    }
-
-    /* --- CONTACT --- */
-    .contact {
-      animation: fadeUp 0.6s 0.45s ease both;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 12px;
     }
 
-    .contact-link {
-      font-size: 12px;
-      color: var(--muted);
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
       text-decoration: none;
-      border: 1px solid var(--border);
-      padding: 8px 18px;
-      background: var(--surface);
-      transition: all 0.2s;
-      letter-spacing: 0.06em;
+      color: var(--text-main);
+      backdrop-filter: blur(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .contact-link:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(0,229,255,0.05);
+    .link-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--card-hover-border);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -10px var(--accent-glow);
     }
 
-    /* --- FOOTER --- */
-    footer {
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .link-card:hover .link-icon {
+      transform: scale(1.08);
+    }
+
+    .link-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .link-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .link-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .arrow-icon {
+      color: var(--text-dim);
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    .link-card:hover .arrow-icon {
+      color: #fff;
+      transform: translateX(4px);
+    }
+
+    /* Publication Card */
+    .publication-card {
+      background: linear-gradient(145deg, rgba(99, 102, 241, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 16px;
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
-      z-index: 1;
+      overflow: hidden;
+    }
+
+    .publication-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, #6366f1, #a855f7);
+    }
+
+    .publication-card:hover {
+      border-color: rgba(99, 102, 241, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.3);
+    }
+
+    .pub-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .pub-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .pub-year {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .pub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .pub-desc {
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .pub-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pub-journal {
+      font-weight: 500;
+      color: #94a3b8;
+    }
+
+    .pub-link-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #818cf8;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
       text-align: center;
-      padding: 32px;
-      font-size: 11px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      letter-spacing: 0.08em;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
     }
 
-    footer span { color: var(--accent2); }
-
-    /* --- CURSOR BLINK --- */
-    .cursor {
-      display: inline-block;
-      width: 10px; height: 1.1em;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
+    /* Responsive */
+    @media (max-width: 480px) {
+      body {
+        padding: 30px 16px;
+      }
+      .link-card {
+        padding: 14px 16px;
+      }
+      .link-title {
+        font-size: 0.9rem;
+      }
+      .name-title h1 {
+        font-size: 1.6rem;
+      }
     }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- TERMINAL LINE --- */
-    .terminal-line {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-
-    .terminal-line .prompt { color: var(--accent2); }
-    .terminal-line .cmd    { color: var(--accent); }
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- Glow effects -->
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
 
-  <header>
-    <p class="tag">// portfolio</p>
-    <h1>Serhat<span>Kaçmaz</span></h1>
-    <p class="subtitle">Software Engineer &nbsp;·&nbsp; <em>Istanbul, TR</em></p>
-  </header>
+  <main class="container">
+    
+    <!-- Profile Info -->
+    <header class="profile-header">
+      <div class="avatar-wrapper">
+        <div class="avatar" aria-label="Serhat Kaçmaz Profile Picture">SK</div>
+        <span class="status-dot" title="Available"></span>
+      </div>
+      <div class="name-title">
+        <h1>Serhat Kaçmaz</h1>
+        <p class="tagline">Software Engineer</p>
+      </div>
+    </header>
 
-  <div class="divider"></div>
+    <!-- Social & Profiles -->
+    <section>
+      <div class="section-title">Bağlantılar</div>
+      <div class="links-grid">
+        
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/serhat-kacmaz/" target="_blank" rel="noopener noreferrer" class="link-card" id="link-linkedin">
+          <div class="link-left">
+            <div class="link-icon" style="color: #38bdf8;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">LinkedIn</span>
+              <span class="link-subtitle">linkedin.com/in/serhat-kacmaz</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
 
-  <div class="terminal-line">
-    <span class="prompt">~/serhatkacmaz</span> <span class="cmd">$ whoami</span><span class="cursor"></span>
-  </div>
+        <!-- GitHub -->
+        <a href="https://github.com/serhatkacmaz" target="_blank" rel="noopener noreferrer" class="link-card" id="link-github">
+          <div class="link-left">
+            <div class="link-icon" style="color: #f1f5f9;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">GitHub</span>
+              <span class="link-subtitle">Açık kaynak projeler ve depolar</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <p class="section-label">// about</p>
-    <p>
-      Merhaba! Ben <strong>Serhat Kaçmaz</strong> — yazılım geliştirme tutkunu bir mühendis.
-      Temiz kod yazmaktan, ölçeklenebilir sistemler tasarlamaktan ve açık kaynak topluluğuna katkı sağlamaktan keyif alıyorum.
-      <strong>Backend mimarisi</strong> ve <strong>modern web teknolojileri</strong> konularında deneyimliyim.
-      Karmaşık problemleri basit, zarif çözümlere dönüştürmek beni motive ediyor.
-    </p>
-  </section>
+        <!-- Medium -->
+        <a href="https://medium.com/@serhatkacmaz" target="_blank" rel="noopener noreferrer" class="link-card" id="link-medium">
+          <div class="link-left">
+            <div class="link-icon" style="color: #34d399;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">Medium</span>
+              <span class="link-subtitle">Teknik yazılar ve makaleler</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
 
-</div>
+      </div>
+    </section>
 
-<footer>
-  Built with <span>♥</span> &nbsp;·&nbsp; Serhat Kaçmaz &nbsp;·&nbsp; 2026
-</footer>
+    <!-- Open Source / Libraries -->
+    <section>
+      <div class="section-title">Open Source</div>
+      <div class="links-grid">
+        
+        <!-- NuGet Package -->
+        <a href="https://www.nuget.org/packages/CodeFlightHub.CorePackets.QuickExtend" target="_blank" rel="noopener noreferrer" class="link-card" id="link-nuget">
+          <div class="link-left">
+            <div class="link-icon" style="color: #38bdf8;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">CodeFlightHub.QuickExtend</span>
+              <span class="link-subtitle">NuGet Package • .NET Extension Library</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
 
+      </div>
+    </section>
+
+    <!-- Publication / Article (Subtle Link) -->
+    <section>
+      <div class="section-title">Akademik Yayın</div>
+      <div class="links-grid">
+        <a href="https://dergipark.org.tr/en/pub/ejosat/article/1214802" target="_blank" rel="noopener noreferrer" class="link-card" id="article-link">
+          <div class="link-left">
+            <div class="link-icon" style="color: #a78bfa;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">Akıllı Mama Sistemi (IoT)</span>
+              <span class="link-subtitle">Avrupa Bilim ve Teknoloji Dergisi (EJOSAT)</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Apps & Stores -->
+    <section>
+      <div class="section-title">Mobil Uygulamalar</div>
+      <div class="links-grid">
+        
+        <!-- Google Play Store -->
+        <a href="https://play.google.com/store/apps/developer?id=Serhat+KACMAZ&hl=tr" target="_blank" rel="noopener noreferrer" class="link-card" id="link-playstore">
+          <div class="link-left">
+            <div class="link-icon" style="color: #60a5fa;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .609-.986zm11.24 11.243l2.25 2.25-11.44 6.49 9.19-8.74zm0-2.114L5.66 2.2 17.1 8.693l-2.25 2.25zm1.472 1.057l3.69 2.095c.989.562.989 1.48 0 2.042l-3.69 2.094-1.782-1.782 1.782-1.782a.455.455 0 0 0 0-.667z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">Google Play Store</span>
+              <span class="link-subtitle">Android Uygulamaları &amp; Oyunlar</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Apple App Store -->
+        <a href="https://apps.apple.com/tr/developer/serhat-kacmaz/id1885178792" target="_blank" rel="noopener noreferrer" class="link-card" id="link-appstore">
+          <div class="link-left">
+            <div class="link-icon" style="color: #e2e8f0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.87-.9.04-1.97.6-2.61 1.35-.57.65-1.06 1.71-.93 2.74 1 .08 2.01-.48 2.62-1.22z"/>
+              </svg>
+            </div>
+            <div class="link-text">
+              <span class="link-title">App Store</span>
+              <span class="link-subtitle">iOS Uygulamaları</span>
+            </div>
+          </div>
+          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© <span id="year"></span> Serhat Kaçmaz. Tüm hakları saklıdır.</p>
+    </footer>
+
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
